@@ -164,11 +164,28 @@ public class TestCalculator {
         int result = Calculator.add(input);
     }
 
-
     @Test(expected = SpliterFormatException.class)
     public  void test20() throws SpliterFormatException{
         String input = "//;\n1#2";
         int result  = Calculator.add(input);
+    }
+
+    /* Kata 6
+    Необходимо сделать чтобы разделители  между числами могли бы быть любой длины в следующем формате:
+    "// [разделитель] \n".
+     */
+    @Test
+    public void test21() throws SpliterFormatException{
+        String input =  "//[***]\n1 *** 2 *** 3";
+        int result = Calculator.add(input);
+        assertEquals(6, result) ;
+    }
+
+    @Test
+    public void test22() throws SpliterFormatException{
+        String input = "//[xy]\n3xy4xy5xy8";
+        int result = Calculator.add(input);
+        assertEquals(20, result);
     }
 
 }
