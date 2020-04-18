@@ -2,7 +2,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Calculator {
-    public static void main(String[] args) {
+    public static void main(String[] args){
         String hello = "Hello world";
         String test;
         test = hello.substring(0, 2);
@@ -15,10 +15,13 @@ public class Calculator {
         if (delimiter.equals("//")) {
             System.out.println("Разделитель" + number.substring(2, 4));
             System.out.println(endDelimiter);
+
+
         }
+
     }
 
-    public static int add(String number) throws SpliterFormatException {
+    public static int add(String number) throws SpliterFormatException, NumberNegativeException {
         int num = 0;
         int result = 0;
         String delimiter = "";
@@ -42,7 +45,7 @@ public class Calculator {
         return result = summ(number);
     }
 
-    public static int add(String number1, String number2) throws SpliterFormatException {
+    public static int add(String number1, String number2) throws SpliterFormatException, NumberNegativeException {
         int num = 0;
         int result = 0;
         String delimiter = "";
@@ -80,7 +83,7 @@ public class Calculator {
         return result;
     }
 
-    public static int add(String number1, String number2, String number3) throws SpliterFormatException {
+    public static int add(String number1, String number2, String number3) throws SpliterFormatException, NumberNegativeException {
         int num = 0;
         int result = 0;
         String delimiter = "";
@@ -130,8 +133,9 @@ public class Calculator {
         return input;
     }
 
-    public static int summ(String input) {
+    public static int summ(String input) throws NumberNegativeException {
         int value = 0;
+        String messageException = "";
 
         if (input.contains(",")) {
             String numbers[] = input.split(",");
@@ -139,10 +143,19 @@ public class Calculator {
                 if (Integer.parseInt(numbers[x]) > 1000) {
                     continue;
                 }
+                if(Integer.parseInt(numbers[x]) < 0){
+                    messageException = messageException.concat(numbers[x]);
+                }
                 value += Integer.parseInt(numbers[x]);
+            }
+            if(!messageException.isEmpty())if(!messageException.isEmpty()){
+                throw new NumberNegativeException(messageException);
             }
             return value;
         } else {
+            if(!messageException.isEmpty()){
+                throw new NumberNegativeException(messageException);
+            }
             return Integer.parseInt(input);
         }
     }
@@ -221,7 +234,7 @@ public class Calculator {
         return result;
     }
 
-    public static int getResultWithDelimiter(String number, String delimiter) throws SpliterFormatException {
+    public static int getResultWithDelimiter(String number, String delimiter) throws SpliterFormatException, NumberNegativeException {
         int result = 0;
 
         number = spaceRemove(number);
