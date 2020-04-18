@@ -208,5 +208,30 @@ public class TestCalculator {
         assertEquals(8, result);
     }
 
+    /*
+    Kata 8
+    Добавить возможность передавать в метод add множество строк с исходными данными.
+    Каждая строка может иметь свои разделители и числа. Метод должен суммировать числа из всех строк.
+    Пример:
+    StringCalculator.add(строка1, строка2);
+    StringCalculator.add(строка1, строка2, строка3);
+     */
+
+    @Test
+    public void test25() throws SpliterFormatException{
+        String input1 = "//[#$]\n1#$2 #$ 3";
+        String input2 = "// [&&] [|||] \n3 |||2 &&3";
+        int result = Calculator.add(input1, input2);
+        assertEquals(14, result);
+    }
+
+    @Test
+    public void test26() throws  SpliterFormatException{
+        String input1 = "1";
+        String input2 = "1,2";
+        String input3 = "1\\n2,3";
+        int result = Calculator.add(input1, input2, input3);
+        assertEquals(10, result);
+    }
 
 }

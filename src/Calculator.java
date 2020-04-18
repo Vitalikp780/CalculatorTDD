@@ -16,12 +16,6 @@ public class Calculator {
             System.out.println("Разделитель" + number.substring(2, 4));
             System.out.println(endDelimiter);
         }
-
-        /*Pattern pattern1 = Pattern.compile("[0-9]");
-        String temp = number.substring(number.indexOf("\n") + 1);
-        temp = temp.replace(number.substring(2, 3), "");
-        Matcher matcher1 = pattern1.matcher(temp);
-        //System.out.println(temp);*/
     }
 
     public static int add(String number) throws SpliterFormatException {
@@ -39,60 +33,89 @@ public class Calculator {
             delimiter = number.substring(0, 2);
 
             if (delimiter.equals("//")) {
-                number = spaceRemove(number);
-                int endDelimiter = number.indexOf("\n");
-                if(endDelimiter == -1){
-                    endDelimiter = number.indexOf("n");
-                }
-
-                String delimiter1 = number.substring(2,3);
-                String delimiter2 = number.substring(endDelimiter-1, endDelimiter);
-
-                if(delimiter1.equals("[") && delimiter2.equals("]")){
-                    int separator = 1;
-                    String temp;
-                    if(getQuantitySeparator(number) == separator){
-                    int index1 = number.indexOf(delimiter1);
-                    int index2 = number.indexOf(delimiter2);
-                    delimiter = number.substring(index1+1, index2);
-                    System.out.println("delimiter");}
-                    else{
-                        separator = getQuantitySeparator(number);
-                        temp = number.replace("[", "");
-                        String sep [] = new String[separator];
-                        temp = temp.substring(2, endDelimiter-1);
-                        temp = spaceRemove(temp);
-                        sep = temp.split("]");
-                        number = number.substring(endDelimiter + 1);
-                        for (int x = 0; x<sep.length; x++){
-                            number = number.replace(sep[x], ",");
-                        }
-                        number = spaceRemove(number);
-                        number = separatorReplacement(number);
-                        return result = summ(number);
-                    }
-
-                }else{
-                    delimiter = number.substring(2, 3);
-                }
-                if(isNumberSeparator(delimiter) || !isCorrectSeparator(number, delimiter)){
-                    System.out.println("Разделитель" + number.substring(2, 4) + " указан не верно!");
-                    throw new SpliterFormatException("Наше исключение перехвачено");
-                }
-                else {
-                    int index;
-                    number = number.replace(delimiter, ",");
-                    index = number.indexOf("\n");
-                    if(index == -1){
-                        index = number.indexOf("n");
-                    }
-                    number = number.substring(index + 1);
-                }
+                result = getResultWithDelimiter(number, delimiter);
+                return result;
             }
         }
         number = spaceRemove(number);
         number = separatorReplacement(number);
         return result = summ(number);
+    }
+
+    public static int add(String number1, String number2) throws SpliterFormatException {
+        int num = 0;
+        int result = 0;
+        String delimiter = "";
+        String number;
+        String numbers[] = {number1, number2};
+
+        for (int x = 0; x < 2; x++) {
+            number = numbers[x];
+
+            //проверка на null и пустую строку
+            if (number == null || number.isEmpty()) {
+                result += 0;
+                break;
+            }
+
+            //проверка на длину строки больше 5
+            if (number.length() > 5) {
+                delimiter = number.substring(0, 2);
+
+                if (delimiter.equals("//")) {
+                    result += getResultWithDelimiter(number, delimiter);
+                }
+                else
+                { number = spaceRemove(number);
+                    number = separatorReplacement(number);
+                    result += summ(number);
+                }
+            }
+            else {
+                number = spaceRemove(number);
+                number = separatorReplacement(number);
+                result += summ(number);
+            }
+        }
+        return result;
+    }
+
+    public static int add(String number1, String number2, String number3) throws SpliterFormatException {
+        int num = 0;
+        int result = 0;
+        String delimiter = "";
+        String number;
+        String numbers[] = {number1, number2, number3};
+
+        for (int x = 0; x < 3; x++) {
+            number = numbers[x];
+
+            //проверка на null и пустую строку
+            if (number == null || number.isEmpty()) {
+                result += 0;
+                break;
+            }
+
+            //проверка на длину строки больше 5
+            if (number.length() > 5) {
+                delimiter = number.substring(0, 2);
+
+                if (delimiter.equals("//")) {
+                    result += getResultWithDelimiter(number, delimiter);
+                }
+                else
+                { number = spaceRemove(number);
+                number = separatorReplacement(number);
+                result += summ(number);
+                }
+            }
+            else {
+                number = spaceRemove(number);
+                number = separatorReplacement(number);
+                result += summ(number);
+            }
+        }
+        return result;
     }
 
     public static String spaceRemove(String input) {
@@ -136,12 +159,12 @@ public class Calculator {
         }
     }
 
-    public static boolean isCorrectSeparator(String input, String delimiter){
+    public static boolean isCorrectSeparator(String input, String delimiter) {
         String test;
         boolean flag;
 
         int index = input.indexOf("\n");
-        if(index == -1){
+        if (index == -1) {
             index = input.indexOf("n");
         }
 
@@ -152,17 +175,17 @@ public class Calculator {
         Pattern pattern = Pattern.compile("[^0-9+^,]");
         Matcher matcher = pattern.matcher(test);
 
-        if(matcher.find()){
+        if (matcher.find()) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
 
-    public static String useDelimiter(String input, String delimiter){
+    public static String useDelimiter(String input, String delimiter) {
         String value;
         int index = input.indexOf("\n") + 1;
-        if(index == -1){
+        if (index == -1) {
             index = input.indexOf("n");
         }
 
@@ -171,20 +194,20 @@ public class Calculator {
         return value;
     }
 
-    public static int getQuantitySeparator(String input){
+    public static int getQuantitySeparator(String input) {
         int result = 0;
         String temp = null;
         int first = 0;
-        int last  = 0;
+        int last = 0;
 
         int index = input.indexOf("\n") + 1;
-        if(index == -1){
+        if (index == -1) {
             index = input.indexOf("n");
         }
-        input = input.substring(2, index-1);
+        input = input.substring(2, index - 1);
 
-        for (int x = 0; x<input.length(); x++) {
-            temp = input.substring(x, x+1);
+        for (int x = 0; x < input.length(); x++) {
+            temp = input.substring(x, x + 1);
             if (temp.equals("[")) {
                 first++;
             }
@@ -196,5 +219,62 @@ public class Calculator {
             }
         }
         return result;
+    }
+
+    public static int getResultWithDelimiter(String number, String delimiter) throws SpliterFormatException {
+        int result = 0;
+
+        number = spaceRemove(number);
+
+        int endDelimiter = number.indexOf("\n");
+        if (endDelimiter == -1) {
+            endDelimiter = number.indexOf("n");
+        }
+
+        String delimiter1 = number.substring(2, 3);
+        String delimiter2 = number.substring(endDelimiter - 1, endDelimiter);
+
+        if (delimiter1.equals("[") && delimiter2.equals("]")) {
+            int separator = 1;
+            String temp;
+            if (getQuantitySeparator(number) == separator) {
+                int index1 = number.indexOf(delimiter1);
+                int index2 = number.indexOf(delimiter2);
+                delimiter = number.substring(index1 + 1, index2);
+                System.out.println("delimiter");
+            } else {
+                separator = getQuantitySeparator(number);
+                temp = number.replace("[", "");
+                String sep[] = new String[separator];
+                temp = temp.substring(2, endDelimiter - 1);
+                temp = spaceRemove(temp);
+                sep = temp.split("]");
+                number = number.substring(endDelimiter + 1);
+                for (int x = 0; x < sep.length; x++) {
+                    number = number.replace(sep[x], ",");
+                }
+                number = spaceRemove(number);
+                number = separatorReplacement(number);
+                return result += summ(number);
+            }
+
+        } else {
+            delimiter = number.substring(2, 3);
+        }
+        if (isNumberSeparator(delimiter) || !isCorrectSeparator(number, delimiter)) {
+            System.out.println("Разделитель" + number.substring(2, 4) + " указан не верно!");
+            throw new SpliterFormatException("Наше исключение перехвачено");
+        } else {
+            int index;
+            number = number.replace(delimiter, ",");
+            index = number.indexOf("\n");
+            if (index == -1) {
+                index = number.indexOf("n");
+            }
+            number = number.substring(index + 1);
+        }
+        number = spaceRemove(number);
+        number = separatorReplacement(number);
+        return result += summ(number);
     }
 }
