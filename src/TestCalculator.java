@@ -188,4 +188,25 @@ public class TestCalculator {
         assertEquals(20, result);
     }
 
+    /*
+    Kata 7
+    Добавить возможность добавлять несколько разделителей.
+    По шаблону: "// [delim1] [delim2] \n"
+    Убедитесь, что программа может работать с несколькими разделителями разной длины (более одного символа).
+     */
+    @Test
+    public void test23() throws SpliterFormatException{
+        String input = "// [*] [%] \n1*2%3";
+        int result = Calculator.add(input);
+        assertEquals(6, result);
+    }
+
+    @Test
+    public void test24() throws SpliterFormatException{
+        String input = "// [&&] [|||] \n3|||2&&3";
+        int result = Calculator.add(input);
+        assertEquals(8, result);
+    }
+
+
 }

@@ -39,18 +39,38 @@ public class Calculator {
             delimiter = number.substring(0, 2);
 
             if (delimiter.equals("//")) {
+                number = spaceRemove(number);
                 int endDelimiter = number.indexOf("\n");
                 if(endDelimiter == -1){
                     endDelimiter = number.indexOf("n");
                 }
+
                 String delimiter1 = number.substring(2,3);
                 String delimiter2 = number.substring(endDelimiter-1, endDelimiter);
 
                 if(delimiter1.equals("[") && delimiter2.equals("]")){
+                    int separator = 1;
+                    String temp;
+                    if(getQuantitySeparator(number) == separator){
                     int index1 = number.indexOf(delimiter1);
                     int index2 = number.indexOf(delimiter2);
                     delimiter = number.substring(index1+1, index2);
-                    System.out.println("delimiter");
+                    System.out.println("delimiter");}
+                    else{
+                        separator = getQuantitySeparator(number);
+                        temp = number.replace("[", "");
+                        String sep [] = new String[separator];
+                        temp = temp.substring(2, endDelimiter-1);
+                        temp = spaceRemove(temp);
+                        sep = temp.split("]");
+                        number = number.substring(endDelimiter + 1);
+                        for (int x = 0; x<sep.length; x++){
+                            number = number.replace(sep[x], ",");
+                        }
+                        number = spaceRemove(number);
+                        number = separatorReplacement(number);
+                        return result = summ(number);
+                    }
 
                 }else{
                     delimiter = number.substring(2, 3);
@@ -149,5 +169,32 @@ public class Calculator {
         value = input.replace(delimiter, ",");
         value = value.substring(index);
         return value;
+    }
+
+    public static int getQuantitySeparator(String input){
+        int result = 0;
+        String temp = null;
+        int first = 0;
+        int last  = 0;
+
+        int index = input.indexOf("\n") + 1;
+        if(index == -1){
+            index = input.indexOf("n");
+        }
+        input = input.substring(2, index-1);
+
+        for (int x = 0; x<input.length(); x++) {
+            temp = input.substring(x, x+1);
+            if (temp.equals("[")) {
+                first++;
+            }
+            if (temp.equals("]")) {
+                last++;
+            }
+            if (last == first) {
+                result++;
+            }
+        }
+        return result;
     }
 }
