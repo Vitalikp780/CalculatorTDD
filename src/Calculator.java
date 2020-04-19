@@ -31,6 +31,20 @@ public class Calculator {
             return result = 0;
         }
 
+        //возвести в квадрат
+        if (number.contains("^")){
+            int squareIndex = number.indexOf('^')-1;
+            int squareValue = Integer.parseInt(number.substring(squareIndex, squareIndex+1));
+            int squareResult = squareValue*squareValue;
+            String squareNumber = number.substring(squareIndex, squareIndex+2);
+            squareNumber.concat("^");
+            if(number.contains("^")){
+                number = number.replace(squareNumber.concat("2"), String.valueOf(squareResult));
+            }else{
+                number = number.replace(squareNumber, String.valueOf(squareResult));
+            }
+        }
+
         //проверка на длину строки больше 5
         if (number.length() > 5) {
             delimiter = number.substring(0, 2);
@@ -110,6 +124,44 @@ public class Calculator {
                 { number = spaceRemove(number);
                 number = separatorReplacement(number);
                 result += summ(number);
+                }
+            }
+            else {
+                number = spaceRemove(number);
+                number = separatorReplacement(number);
+                result += summ(number);
+            }
+        }
+        return result;
+    }
+
+    public static int add(String number1, String number2, String number3, String number4, String number5, String number6, String number7, String number8, String number9, String number10 ) throws SpliterFormatException, NumberNegativeException {
+        int num = 0;
+        int result = 0;
+        String delimiter = "";
+        String number;
+        String numbers[] = {number1, number2, number3, number4, number5, number6, number7, number8, number9, number10};
+
+        for (int x = 0; x < 10; x++) {
+            number = numbers[x];
+
+            //проверка на null и пустую строку
+            if (number == null || number.isEmpty()) {
+                result += 0;
+                break;
+            }
+
+            //проверка на длину строки больше 5
+            if (number.length() > 5) {
+                delimiter = number.substring(0, 2);
+
+                if (delimiter.equals("//")) {
+                    result += getResultWithDelimiter(number, delimiter);
+                }
+                else
+                { number = spaceRemove(number);
+                    number = separatorReplacement(number);
+                    result += summ(number);
                 }
             }
             else {

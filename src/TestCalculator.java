@@ -289,4 +289,94 @@ public class TestCalculator {
         Calculator.add(input);
     }
 
+    //Kata 10
+    //Добавить проверку времени работы суммирования, для десяти строк.
+    //Время работы калькулятора не должно превышать 30 мс.
+
+    @Test(timeout = 30)
+    public void test31 () throws SpliterFormatException, NumberNegativeException{
+        String input = "// [*] [%] \n1 * 2% 3";
+        int result = Calculator.add(input);
+        assertEquals(6, result);
+    }
+
+    @Test(timeout = 30)
+    public void test32 () throws SpliterFormatException, NumberNegativeException{
+        String input = "// [&&] [|||]\n3 |||2 &&3";
+        int result = Calculator.add(input);
+        assertEquals(8, result);
+    }
+
+    @Test(timeout = 30)
+    public void test33 () throws SpliterFormatException, NumberNegativeException{
+        String input = "// [//] \n 1//2//4";
+        int result = Calculator.add(input);
+        assertEquals(7, result);
+    }
+
+    @Test(timeout = 30)
+    public void test34 () throws SpliterFormatException, NumberNegativeException{
+        String input = "999,999";
+        int result = Calculator.add(input);
+        assertEquals(1998, result);
+    }
+
+    @Test(timeout = 30)
+    public void test35 () throws SpliterFormatException, NumberNegativeException{
+        String input = "3,1001";
+        int result = Calculator.add(input);
+        assertEquals(3, result);
+    }
+
+    /*@Test(timeout = 30)
+    public void test36 () throws SpliterFormatException, NumberNegativeException{
+        String input = "// [*] [%][] \n1 * 2% 3";
+        int result = Calculator.add(input);
+        assertEquals(6, result);
+    }*/
+
+    @Test(timeout = 30)
+    public void test37 () throws SpliterFormatException, NumberNegativeException{
+        String input1 = "// [*] [%] \n1 * 2% 3";
+        String input2 = "// [&&] [|||]\n3 |||2 &&3";
+        String input3 = "// [//] \n 1//2//4";
+        String input4 = "999,999";
+        String input5 = "3,1001";
+        String input6 = "//[#$]\n1#$2 #$ 3";
+        String input7 = "// [&&] [|||]\n3 |||2 &&3";
+        String input8 = "1";
+        String input9 = "1,2";
+        String input10 = "1\\n2,3";
+
+        int result = Calculator.add(input1, input2, input3, input4, input5, input6, input7, input8, input9, input10);
+        assertEquals(2046, result);
+    }
+
+    //Kata 11
+    //Добавить возможность возведения чисел в строке в квадрат.
+    // Для указания степени используется символ ^.
+    @Test
+    public void test38 () throws SpliterFormatException, NumberNegativeException{
+        String input = "2^, 2";
+        int result = Calculator.add(input);
+        assertEquals(6, result);
+    }
+
+    @Test
+    public void test39 () throws SpliterFormatException, NumberNegativeException{
+        String input = "3^\\n1";
+        int result = Calculator.add(input);
+        assertEquals(10, result);
+    }
+
+    @Test
+    public void test40 () throws SpliterFormatException, NumberNegativeException{
+        String input = "2^2, 2^2";
+        int result = Calculator.add(input);
+        assertEquals(8, result);
+    }
+
+    //Kata 12
+    //Добавить возможность возведения чисел в строке в указанную степень.
+    // Для указания степени используется символ ^.
 }
