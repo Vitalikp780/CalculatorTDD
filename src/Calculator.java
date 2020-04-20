@@ -4,21 +4,6 @@ import java.util.regex.Pattern;
 public class Calculator {
     public static void main(String[] args){
         String hello = "Hello world";
-        String test;
-        test = hello.substring(0, 2);
-        System.out.println("hello");
-        System.out.println(test);
-        String delimiter = "";
-        String number = "//;\n1;2";
-        delimiter = number.substring(0, 2);
-        int endDelimiter = number.indexOf("\n");
-        if (delimiter.equals("//")) {
-            System.out.println("Разделитель" + number.substring(2, 4));
-            System.out.println(endDelimiter);
-
-
-        }
-
     }
 
     public static int add(String number) throws SpliterFormatException, NumberNegativeException {
@@ -28,21 +13,13 @@ public class Calculator {
 
         //проверка на null и пустую строку
         if (number == null || number.isEmpty()) {
-            return result = 0;
+            result = 0;
+            return result;
         }
 
-        //возвести в квадрат
+        //возвести в степень
         if (number.contains("^")){
-            int squareIndex = number.indexOf('^')-1;
-            int squareValue = Integer.parseInt(number.substring(squareIndex, squareIndex+1));
-            int squareResult = squareValue*squareValue;
-            String squareNumber = number.substring(squareIndex, squareIndex+2);
-            squareNumber.concat("^");
-            if(number.contains("^")){
-                number = number.replace(squareNumber.concat("2"), String.valueOf(squareResult));
-            }else{
-                number = number.replace(squareNumber, String.valueOf(squareResult));
-            }
+            number = getExponent(number);
         }
 
         //проверка на длину строки больше 5
@@ -73,6 +50,11 @@ public class Calculator {
             if (number == null || number.isEmpty()) {
                 result += 0;
                 break;
+            }
+
+            //возвести в степень
+            if (number.contains("^")){
+                number = getExponent(number);
             }
 
             //проверка на длину строки больше 5
@@ -113,6 +95,11 @@ public class Calculator {
                 break;
             }
 
+            //возвести в степень
+            if (number.contains("^")){
+                number = getExponent(number);
+            }
+
             //проверка на длину строки больше 5
             if (number.length() > 5) {
                 delimiter = number.substring(0, 2);
@@ -149,6 +136,11 @@ public class Calculator {
             if (number == null || number.isEmpty()) {
                 result += 0;
                 break;
+            }
+
+            //возвести в степень
+            if (number.contains("^")){
+                number = getExponent(number);
             }
 
             //проверка на длину строки больше 5
@@ -341,5 +333,40 @@ public class Calculator {
         number = spaceRemove(number);
         number = separatorReplacement(number);
         return result += summ(number);
+    }
+
+    public static String getMethodPow(String input){
+        String result;
+        int resultNumber;
+        String valueAfter;
+        int numberAfter;
+        int squareIndex = input.indexOf('^')-1;
+        int squareValue = Integer.parseInt(input.substring(squareIndex, squareIndex+1));
+        valueAfter = input.substring(squareIndex+2, squareIndex+3);
+        Pattern pattern = Pattern.compile("[0-9]");
+        Matcher matcher = pattern.matcher(valueAfter);
+
+        if(matcher.find()){
+            numberAfter = Integer.parseInt(valueAfter);
+            resultNumber = (int) Math.pow(squareValue, numberAfter);
+            result = input.substring(squareIndex, squareIndex+3);
+        }else{
+            resultNumber = (int) Math.pow(squareValue, 2);
+            result = input.substring(squareIndex, squareIndex+2);
+        }
+        result = input.replace(result, String.valueOf(resultNumber));
+
+        return result;
+    }
+
+    public static String getExponent(String number) {
+        boolean flag = true;
+        while (flag) {
+            number = getMethodPow(number);
+            if (!number.contains("^")) {
+                flag = false;
+            }
+        }
+        return number;
     }
 }

@@ -254,13 +254,14 @@ public class TestCalculator {
         Calculator.add(input);
     }
 
-    /*@Test(expected = NumberNegativeException.class)
-    public void test28() throws SpliterFormatException, NumberNegativeException {
+    @Test(expected = NumberNegativeException.class)
+    public void test271() throws SpliterFormatException, NumberNegativeException {
         // arrange
         String input = "1, -1";
         // act
         Calculator.add(input);
-    }*/
+    }
+
     @Test
     public void test28() throws SpliterFormatException, NumberNegativeException {
         String input = "-1, 1";
@@ -379,4 +380,25 @@ public class TestCalculator {
     //Kata 12
     //Добавить возможность возведения чисел в строке в указанную степень.
     // Для указания степени используется символ ^.
+
+    @Test
+    public  void test41() throws SpliterFormatException, NumberNegativeException{
+        String input = "2^3, 2";
+        int result = Calculator.add(input);
+        assertEquals(10, result);
+    }
+
+    @Test
+    public void test42() throws SpliterFormatException, NumberNegativeException{
+        String input = "3^3\\n2^2";
+        int result = Calculator.add(input);
+        assertEquals(31, result);
+    }
+
+    @Test
+    public void test43() throws SpliterFormatException, NumberNegativeException{
+        String input ="//;\\n1; 2^8";
+        int result = Calculator.add(input);
+        assertEquals(257, result);
+    }
 }
